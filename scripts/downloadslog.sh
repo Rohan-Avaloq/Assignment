@@ -21,7 +21,7 @@ curl -H "Authorization: token ${TOKEN}" \
 
 # #!/bin/bash
 
-# # Variables
+# # Variables 
 # RUN_ID=${GITHUB_RUN_ID}
 # REPO=${GITHUB_REPOSITORY}
 # TOKEN=${MY_TOKEN}
