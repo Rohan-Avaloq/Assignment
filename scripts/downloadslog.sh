@@ -21,11 +21,10 @@ curl -H "Authorization: token ${TOKEN}" \
 
 # #!/bin/bash
 
-# # Variables 
+# # Variables
 # RUN_ID=${GITHUB_RUN_ID}
 # REPO=${GITHUB_REPOSITORY}
-# TOKEN=${MY_TOKEN}
-
+# TOKEN=${MY_TOKEN} 
 # # Download logs
 # curl -H "Authorization: token ${TOKEN}" \
 #      -H "Accept: application/vnd.github.v3+json" \
