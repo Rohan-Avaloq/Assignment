@@ -16,12 +16,12 @@ jobs:
       - name: Download Workflow Logs
         run: |
           chmod +x scripts/downloadslog.sh
-          ./scripts/downloadslog.sh
+          bash scripts/downloadslog.sh
 
       - name: Send Logs to Teams
         run: |
           chmod +x scripts/sendtoteams.sh
-          ./scripts/sendtoteams.sh
+          bash scripts/sendtoteams.sh
         env:
           WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
           GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
