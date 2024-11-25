@@ -3,7 +3,7 @@
 # Variables
 WEBHOOK_URL=${WEBHOOK_URL}
 LOGS_LINK="https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-LOG_FILE=$(cat workflow-logs.txt)
+LOG_FILE= workflow-logs.txt
 
 
 # Truncate logs to avoid exceeding Teams' limits
