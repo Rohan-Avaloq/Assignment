@@ -41,7 +41,7 @@ JSON_PAYLOAD=$(cat <<EOF
   "text": $escaped_logs,
   "sections": [
     {
-      "text": "Download the attached logs for detailed information."
+      "text": $escaped_logs 
     }
   ]
 }
