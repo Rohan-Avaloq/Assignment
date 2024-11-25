@@ -6,7 +6,7 @@ REPO=${GITHUB_REPOSITORY}
 TOKEN=${MY_TOKEN}
 
 
-echo ${ REPO }
+echo "$REPO"
 
 # API call to fetch logs
 curl -H "Authorization: token ${TOKEN}" \
