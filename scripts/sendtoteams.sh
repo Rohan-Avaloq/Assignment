@@ -6,14 +6,39 @@ LOGS_LINK="https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}
 LOG_FILE=$(cat workflow-logs.txt)
 
 Prepare JSON payload
+# JSON_PAYLOAD=$(cat <<EOF
+# {
+#   "@type": "MessageCard",
+#   "@context": "https://schema.org/extensions",
+#   "summary": "GitHub Actions Workflow Logs",
+#   "themeColor": "0076D7",
+#   "title": "Workflow Logs for Run ID ${GITHUB_RUN_ID}",
+#   "text": $LOG_FILES,
+#   "sections": [
+#     {
+#       "text": "Download the attached logs for detailed information."
+#     }
+#   ]
+# }
+# EOF
+# )
+
+
+# Truncate logs to avoid exceeding Teams' limits
+LOG_FILES=$(echo "$LOG_FILES" | head -n 50)
+
+# Escape logs for JSON compatibility
+escaped_logs=$(echo "$LOG_FILES" | jq -R .)
+
+# Create JSON payload
 JSON_PAYLOAD=$(cat <<EOF
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
   "summary": "GitHub Actions Workflow Logs",
   "themeColor": "0076D7",
-  "title": "Workflow Logs for Run ID ${GITHUB_RUN_ID}",
-  "text": $LOG_FILES,
+  "title": "Workflow Logs for Run ID ${RUN_ID}",
+  "text": $escaped_logs,
   "sections": [
     {
       "text": "Download the attached logs for detailed information."
