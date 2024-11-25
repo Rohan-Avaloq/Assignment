@@ -3,9 +3,9 @@
 # Variables
 WEBHOOK_URL=${WEBHOOK_URL}
 LOGS_LINK="https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-LOG_FILE="workflow-logs.txt"
+LOG_FILE=$(cat workflow-logs.txt)
 
-# Prepare JSON payload
+Prepare JSON payload
 JSON_PAYLOAD=$(cat <<EOF
 {
   "@type": "MessageCard",
@@ -14,7 +14,7 @@ JSON_PAYLOAD=$(cat <<EOF
   "themeColor": "0076D7",
   "title": "Workflow Logs for Run ID ${GITHUB_RUN_ID}",
   # "text": "The workflow has completed. [View Logs](${LOGS_LINK}).",
-  "text": ${ cat workflow-logs.txt },
+  "text": $LOG_FILES,
   "sections": [
     {
       "text": "Download the attached logs for detailed information."
@@ -23,6 +23,8 @@ JSON_PAYLOAD=$(cat <<EOF
 }
 EOF
 )
+
+
 
 # Send to Teams
 curl -H "Content-Type: application/json" \
