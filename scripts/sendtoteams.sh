@@ -13,7 +13,8 @@ JSON_PAYLOAD=$(cat <<EOF
   "summary": "GitHub Actions Workflow Logs",
   "themeColor": "0076D7",
   "title": "Workflow Logs for Run ID ${GITHUB_RUN_ID}",
-  "text": "The workflow has completed. [View Logs](${LOGS_LINK}).",
+  # "text": "The workflow has completed. [View Logs](${LOGS_LINK}).",
+  "text": ${ cat workflow-logs.txt },
   "sections": [
     {
       "text": "Download the attached logs for detailed information."
