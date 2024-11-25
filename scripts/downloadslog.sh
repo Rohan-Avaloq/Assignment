@@ -7,6 +7,7 @@ TOKEN=${MY_TOKEN}
 
 
 echo "$REPO"
+echo "$TOKEN"
 
 
 
@@ -14,7 +15,7 @@ echo "$REPO"
 curl -H "Authorization: token ${TOKEN}" \
      -H "Accept: application/vnd.github.v3+json" \
      -L \
-     "https://github.com/Rohan-Avaloq/Assignment/actions/runs/12009335708/job/33473838312/logs" \
+     "https://api.github.com/repos/${REPO}/actions/runs/${RUN_ID}/logs" \
      -o workflow-logs.txt
 
 
