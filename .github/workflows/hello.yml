@@ -9,4 +9,4 @@ jobs:
         uses: actions/checkou@v3
       - name: Run Build Command
         run: |
-          echo "Building the project.."
+          echo "Building the projectfhg.."
