@@ -24,6 +24,7 @@ Prepare JSON payload
 # )
 
 
+
 # Truncate logs to avoid exceeding Teams' limits
 LOG_FILES=$(echo "$LOG_FILES" | head -n 50)
 
@@ -48,6 +49,8 @@ JSON_PAYLOAD=$(cat <<EOF
 EOF
 )
 
+
+echo "Sending Payload: $JSON_PAYLOAD" | jq .
 
 
 # Send to Teams
