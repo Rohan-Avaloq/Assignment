@@ -13,11 +13,11 @@ curl -H "Authorization: token ${TOKEN}" \
      -H "Accept: application/vnd.github.v3+json" \
      -L \
      "https://api.github.com/repos/${REPO}/actions/runs/${RUN_ID}/logs" \
-     -o workflow-logs.zip
+     -o workflow-logs.txt
 
 # Unzip logs for further processing (if needed)
-unzip -o workflow-logs.zip -d workflow-logs
-echo "Workflow logs downloaded and unzipped."
+# unzip -o workflow-logs.zip -d workflow-logs
+# echo "Workflow logs downloaded and unzipped."
 
 # #!/bin/bash
 

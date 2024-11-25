@@ -3,7 +3,7 @@
 # Variables
 WEBHOOK_URL=${WEBHOOK_URL}
 LOGS_LINK="https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-LOG_FILE="workflow-logs.zip"
+LOG_FILE="workflow-logs.txt"
 
 # Prepare JSON payload
 JSON_PAYLOAD=$(cat <<EOF
@@ -30,20 +30,20 @@ curl -H "Content-Type: application/json" \
 
 echo "Notification sent to Teams."
 
-#!/bin/bash
+# #!/bin/bash
 
-# Variables
-WEBHOOK_URL=${WEBHOOK_URL}
-LOGS_LINK="https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-LOG_FILE="workflow-logs.zip"
+# # Variables
+# WEBHOOK_URL=${WEBHOOK_URL}
+# LOGS_LINK="https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+# LOG_FILE="workflow-logs.zip"
 
-# Base64 encode the log file
-if [ -f "$LOG_FILE" ]; then
-    BASE64_LOG=$(base64 "$LOG_FILE")
-else
-    echo "Log file not found. Please ensure the download was successful."
-    exit 1
-fi
+# # Base64 encode the log file
+# if [ -f "$LOG_FILE" ]; then
+#     BASE64_LOG=$(base64 "$LOG_FILE")
+# else
+#     echo "Log file not found. Please ensure the download was successful."
+#     exit 1
+# fi
 
 # # Prepare JSON payload with base64 encoded file
 # JSON_PAYLOAD=$(cat <<EOF
