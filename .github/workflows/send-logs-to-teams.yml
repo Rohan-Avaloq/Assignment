@@ -16,7 +16,7 @@ jobs:
       - name: Download Workflow Logs
         run: |
           chmod +x scripts/downloadslog.sh
-          ./scripts/downloadlogs.sh
+          ./scripts/downloadslogs.sh
 
       - name: Send Logs to Teams
         run: |
