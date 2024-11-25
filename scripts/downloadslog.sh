@@ -8,6 +8,8 @@ TOKEN=${MY_TOKEN}
 
 echo "$REPO"
 
+
+
 # API call to fetch logs
 curl -H "Authorization: token ${TOKEN}" \
      -H "Accept: application/vnd.github.v3+json" \
@@ -16,4 +18,5 @@ curl -H "Authorization: token ${TOKEN}" \
      -o workflow-logs.txt
 
 
-
+chmod -x workflow-logs.txt
+cat workflow-logs.txt
