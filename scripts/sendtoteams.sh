@@ -141,10 +141,10 @@ fi
 RUN_ID=${GITHUB_RUN_ID}
 REPO=${GITHUB_REPOSITORY}
 TOKEN=${MY_TOKEN}
-WEBHOOK_URL=${TEAMS_WEBHOOK_URL }
+WEBHOOK_URL=https://avaloqgroup.webhook.office.com/webhookb2/acc69694-4513-4770-9275-42f898a52f96@2ba8a4bf-3d7a-478b-b8d1-85cae49436ef/IncomingWebhook/ee99d20a71df4bb7993376f96e8a7427/9be00cee-8615-47cd-acdb-537181146f7d/V2vqRicQ0PbEBM-ImL6GUIwMByEgr2iZbJBdhuJXvNOV41
 
 
-
+# ${TEAMS_WEBHOOK_URL }
 
 # Validate environment variables
 if [ -z "$RUN_ID" ] || [ -z "$REPO" ] || [ -z "$TOKEN" ] || [ -z "$WEBHOOK_URL" ]; then
