@@ -1,49 +1,49 @@
-# #!/bin/bash
+#!/bin/bash
 
-# # Variables
-# WEBHOOK_URL=${WEBHOOK_URL}
-# LOGS_LINK="https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-# LOG_FILE="workflow-logs.zip"
+# Variables
+WEBHOOK_URL=${WEBHOOK_URL}
+LOGS_LINK="https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+LOG_FILE="workflow-logs.zip"
 
-# # Prepare JSON payload
-# JSON_PAYLOAD=$(cat <<EOF
-# {
-#   "@type": "MessageCard",
-#   "@context": "https://schema.org/extensions",
-#   "summary": "GitHub Actions Workflow Logs",
-#   "themeColor": "0076D7",
-#   "title": "Workflow Logs for Run ID ${GITHUB_RUN_ID}",
-#   "text": "The workflow has completed. [View Logs](${LOGS_LINK}).",
-#   "sections": [
-#     {
-#       "text": "Download the attached logs for detailed information."
-#     }
-#   ]
-# }
-# EOF
-# )
+# Prepare JSON payload
+JSON_PAYLOAD=$(cat <<EOF
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "summary": "GitHub Actions Workflow Logs",
+  "themeColor": "0076D7",
+  "title": "Workflow Logs for Run ID ${GITHUB_RUN_ID}",
+  "text": "The workflow has completed. [View Logs](${LOGS_LINK}).",
+  "sections": [
+    {
+      "text": "Download the attached logs for detailed information."
+    }
+  ]
+}
+EOF
+)
 
-# # Send to Teams
-# curl -H "Content-Type: application/json" \
-#      -d "${JSON_PAYLOAD}" \
-#      "${WEBHOOK_URL}"
+# Send to Teams
+curl -H "Content-Type: application/json" \
+     -d "${JSON_PAYLOAD}" \
+     "${WEBHOOK_URL}"
 
-# echo "Notification sent to Teams."
+echo "Notification sent to Teams."
 
-# #!/bin/bash
+#!/bin/bash
 
-# # Variables
-# WEBHOOK_URL=${WEBHOOK_URL}
-# LOGS_LINK="https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-# LOG_FILE="workflow-logs.zip"
+# Variables
+WEBHOOK_URL=${WEBHOOK_URL}
+LOGS_LINK="https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+LOG_FILE="workflow-logs.zip"
 
-# # Base64 encode the log file
-# if [ -f "$LOG_FILE" ]; then
-#     BASE64_LOG=$(base64 "$LOG_FILE")
-# else
-#     echo "Log file not found. Please ensure the download was successful."
-#     exit 1
-# fi
+# Base64 encode the log file
+if [ -f "$LOG_FILE" ]; then
+    BASE64_LOG=$(base64 "$LOG_FILE")
+else
+    echo "Log file not found. Please ensure the download was successful."
+    exit 1
+fi
 
 # # Prepare JSON payload with base64 encoded file
 # JSON_PAYLOAD=$(cat <<EOF
@@ -138,10 +138,13 @@
 #!/bin/bash
 
 # Fetch environment variables
-RUN_ID=${RUN_ID}
-REPO=${REPO}
+RUN_ID=${GITHUB_RUN_ID}
+REPO=${GITHUB_REPOSITORY}
 TOKEN=${MY_TOKEN}
-WEBHOOK_URL=${TEAMS_WEBHOOK_URL}
+WEBHOOK_URL=${TEAMS_WEBHOOK_URL }
+
+
+
 
 # Validate environment variables
 if [ -z "$RUN_ID" ] || [ -z "$REPO" ] || [ -z "$TOKEN" ] || [ -z "$WEBHOOK_URL" ]; then
