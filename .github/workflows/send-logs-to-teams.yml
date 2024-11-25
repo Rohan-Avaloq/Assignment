@@ -2,7 +2,7 @@ name: Send Logs to Teams
 
 on:
   workflow_run:
-    workflows: ["Your Main Workflow Name"]  # Triggered by another workflow
+    workflows: ["hello World"]  # Triggered by another workflow
     types:
       - completed
 
@@ -24,4 +24,4 @@ jobs:
           ./scripts/sendtoteams.sh
         env:
           WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
