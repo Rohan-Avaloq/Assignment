@@ -13,5 +13,5 @@ curl -H "Authorization: token ${TOKEN}" \
      -o workflow-logs.zip
 
 # Unzip logs for further processing (if needed)
-unzip -o workflow-logs.zip -d workflow-logs
+# unzip -o workflow-logs.zip -d workflow-logs
 echo "Workflow logs downloaded and unzipped."
