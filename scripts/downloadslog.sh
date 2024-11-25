@@ -3,7 +3,7 @@
 # Variables
 RUN_ID=${GITHUB_RUN_ID}
 REPO=${GITHUB_REPOSITORY}
-TOKEN=${GITHUB_TOKEN}
+TOKEN=${MY_TOKEN}
 
 # API call to fetch logs
 curl -H "Authorization: token ${TOKEN}" \
