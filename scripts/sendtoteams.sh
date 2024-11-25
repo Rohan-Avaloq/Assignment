@@ -78,12 +78,69 @@
 # echo "Notification with logs sent to Teams."
 
 
+# #!/bin/bash
+
+# # Fetch environment variables
+# RUN_ID=${RUN_ID}
+# REPO=${REPO}
+# TOKEN=${TOKEN}
+# WEBHOOK_URL=${TEAMS_WEBHOOK_URL}
+
+# # Validate environment variables
+# if [ -z "$RUN_ID" ] || [ -z "$REPO" ] || [ -z "$TOKEN" ] || [ -z "$WEBHOOK_URL" ]; then
+#   echo "Error: Missing required environment variables (RUN_ID, REPO, TOKEN, or WEBHOOK_URL)."
+#   exit 1
+# fi
+
+# # Fetch workflow logs from GitHub
+# echo "Fetching workflow logs for RUN_ID=${RUN_ID}..."
+# logs=$(curl -s \
+#   -H "Authorization: token ${TOKEN}" \
+#   -H "Accept: application/vnd.github.v3+json" \
+#   -L \
+#   "https://api.github.com/repos/${REPO}/actions/runs/${RUN_ID}/logs")
+
+# # Verify if logs were fetched successfully
+# if [ $? -ne 0 ] || [ -z "$logs" ]; then
+#   echo "Error: Failed to fetch logs."
+#   exit 1
+# fi
+
+# # Prepare JSON payload for Teams
+# summary="Workflow Logs for Run ID ${RUN_ID}"
+# payload=$(jq -n \
+#   --arg summary "$summary" \
+#   --arg logs "$logs" \
+#   '{
+#     "@type": "MessageCard",
+#     "@context": "https://schema.org/extensions",
+#     "themeColor": "0076D7",
+#     "summary": $summary,
+#     "title": "GitHub Actions Workflow Logs",
+#     "text": $logs
+#   }')
+
+# # Send logs to Microsoft Teams
+# echo "Sending logs to Teams..."
+# curl -s -H "Content-Type: application/json" \
+#      -d "$payload" \
+#      "$WEBHOOK_URL"
+
+# if [ $? -eq 0 ]; then
+#   echo "Logs sent to Teams successfully."
+# else
+#   echo "Error: Failed to send logs to Teams."
+#   exit 1
+# fi
+
+
+
 #!/bin/bash
 
 # Fetch environment variables
 RUN_ID=${RUN_ID}
 REPO=${REPO}
-TOKEN=${TOKEN}
+TOKEN=${MY_TOKEN}
 WEBHOOK_URL=${TEAMS_WEBHOOK_URL}
 
 # Validate environment variables
@@ -92,25 +149,34 @@ if [ -z "$RUN_ID" ] || [ -z "$REPO" ] || [ -z "$TOKEN" ] || [ -z "$WEBHOOK_URL" 
   exit 1
 fi
 
-# Fetch workflow logs from GitHub
-echo "Fetching workflow logs for RUN_ID=${RUN_ID}..."
-logs=$(curl -s \
+# Step 1: Get the URL for logs
+echo "Fetching logs URL for RUN_ID=${RUN_ID}..."
+logs_url=$(curl -s \
   -H "Authorization: token ${TOKEN}" \
   -H "Accept: application/vnd.github.v3+json" \
-  -L \
-  "https://api.github.com/repos/${REPO}/actions/runs/${RUN_ID}/logs")
+  "https://api.github.com/repos/${REPO}/actions/runs/${RUN_ID}" | jq -r '.logs_url')
 
-# Verify if logs were fetched successfully
-if [ $? -ne 0 ] || [ -z "$logs" ]; then
-  echo "Error: Failed to fetch logs."
+if [ -z "$logs_url" ]; then
+  echo "Error: Failed to retrieve logs URL."
   exit 1
 fi
 
-# Prepare JSON payload for Teams
+# Step 2: Download logs
+echo "Downloading logs from $logs_url..."
+logs=$(curl -s -L \
+  -H "Authorization: token ${TOKEN}" \
+  "$logs_url")
+
+if [ -z "$logs" ]; then
+  echo "Error: Failed to download logs."
+  exit 1
+fi
+
+# Step 3: Prepare JSON payload for Teams
 summary="Workflow Logs for Run ID ${RUN_ID}"
 payload=$(jq -n \
   --arg summary "$summary" \
-  --arg logs "$logs" \
+  --arg logs "$(echo "$logs" | head -n 50)" \
   '{
     "@type": "MessageCard",
     "@context": "https://schema.org/extensions",
@@ -120,7 +186,7 @@ payload=$(jq -n \
     "text": $logs
   }')
 
-# Send logs to Microsoft Teams
+# Step 4: Send logs to Microsoft Teams
 echo "Sending logs to Teams..."
 curl -s -H "Content-Type: application/json" \
      -d "$payload" \
